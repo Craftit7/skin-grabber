@@ -3,7 +3,7 @@
 **An Open Source bot for grabing minecraft skins.**
 
 API's Used:
- * [Minotar API](https://www.mintoar.net)
+ * [Minotar API](https://www.minotar.net)
  * [Crafatar API](https://www.crafatar.com)
 
 ## __Commands__
