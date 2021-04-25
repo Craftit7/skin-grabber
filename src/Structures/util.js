@@ -1,6 +1,7 @@
 const path = require("path");
 const { promisify } = require("util");
 const glob = promisify(require("glob"));
+const axios = require('axios')
 
 module.exports = class Util {
     constructor(client) {
@@ -70,5 +71,11 @@ module.exports = class Util {
             style: "short",
             type: type,
         }).format(array);
+    }
+    
+    async convertNameToUUID(username) {
+        const res = await axios.get('https://api.mojang.com/users/profiles/minecraft/' + username)
+        const json = await res.data
+        return json.id
     }
 };

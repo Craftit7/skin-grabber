@@ -1,5 +1,4 @@
 const { MessageEmbed } = require("discord.js");
-const { convertNameToUUID } = require('../../util/convertUsernameToUUID')
 
 module.exports = {
     name: "3d",
@@ -14,7 +13,7 @@ module.exports = {
         if (!username.length)
             return msg.channel.send(`Please provide a username.`);
         
-        const uuid = await convertNameToUUID(username);
+        const uuid = await client.utils.convertNameToUUID(username);
         const renderUrl = `https://crafatar.com/renders/body/${uuid}`;
         
         const renderEmbed = new MessageEmbed()

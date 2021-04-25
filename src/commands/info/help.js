@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const { default_prefix } = require("../../botconfig");
+const { default_prefix } = require("../../../botconfig");
 
 module.exports = {
     name: "help",

@@ -2,11 +2,12 @@ const { Client, Collection } = require('discord.js')
 const client = new Client()
 const { readdirSync } = require('fs')
 const Util = require("./Structures/util.js");
-const { owner } = require('./botconfig')
+const { owner } = require('../botconfig')
 const db = require('quick.db')
+const { join } = require('path')
 require('dotenv').config()
 
-client.categories = readdirSync("./commands");
+client.categories = readdirSync(join(__dirname, './commands'));
 client.commands = new Collection();
 client.aliases = new Collection();
 client.utils = new Util(this);
