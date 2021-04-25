@@ -1,7 +1,7 @@
 const admin = require("firebase-admin");
 require('dotenv').config()
 
-const serviceAccount = require('../skin-grabber-firebase-adminsdk-o5pcv-6bc4d0cb3e.json')
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_AUTH);
 
 const firebaseConfig = {
     credential: admin.credential.cert(serviceAccount),

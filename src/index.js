@@ -5,8 +5,8 @@ const Util = require("./Structures/util.js");
 const { owner } = require("../botconfig");
 const db = require("quick.db");
 const { join } = require("path");
-require("dotenv").config();
 const { keepAlive } = require("./keepalive");
+require("dotenv").config();
 
 client.categories = readdirSync(join(__dirname, "./commands"));
 client.commands = new Collection();
@@ -19,7 +19,7 @@ client.firestore = require("./Structures/FirestoreDB");
 require(`./handlers/command.js`)(client);
 
 client.on("ready", () => {
-    console.log(`Logged in as ${client.user.username} (${client.user.id})`);
+    console.log(`Logged in as ${client.user.tag} (${client.user.id})`);
 });
 
 client.on("error", console.error); // pog error handling
@@ -54,4 +54,4 @@ client.on("message", async (message) => {
 
 keepAlive();
 
-client.login("NzM0NDc2NjI5OTU0MjY1MTA4.XxSQqg.uAtIi1YwxxXYF8HHX3KLBqXJMXA");
+client.login(process.env.TOKEN);
