@@ -48,7 +48,10 @@ module.exports = {
             );
             message.channel.send(embed)
         } else {
-            const prefix = default_prefix;
+            let prefix;
+            let fetchPrefix = await client.firestore.get(msg.guild.id, "prefixes");
+            if (fetchPrefix) prefix = fetchPrefix;
+            else prefix = default_prefix
 
             let emx = new MessageEmbed()
                 .setAuthor(`${client.user.username} Help`)

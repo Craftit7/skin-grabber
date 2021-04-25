@@ -10,7 +10,7 @@ module.exports = {
 
     run: (client, msg, args) => {
         if(!args[0].toString()) return msg.channel.send('Enter a new prefix.')
-        client.db.set(`prefix_${msg.guild.id}`, args[0].toString())
+        client.firestore.set('prefixes', 'guild-prefix', msg.guild.id, args[0].toString())
 
         const prefixEmbed = new MessageEmbed()
             .setTitle(`New prefix succesfully set.`)

@@ -1,36 +1,36 @@
-const { Client, Collection } = require('discord.js')
-const client = new Client()
-const { readdirSync } = require('fs')
+const { Client, Collection } = require("discord.js");
+const client = new Client();
+const { readdirSync } = require("fs");
 const Util = require("./Structures/util.js");
-const { owner } = require('../botconfig')
-const db = require('quick.db')
-const { join } = require('path')
-require('dotenv').config()
+const { owner } = require("../botconfig");
+const db = require("quick.db");
+const { join } = require("path");
+require("dotenv").config();
+const { keepAlive } = require("./keepalive");
 
-client.categories = readdirSync(join(__dirname, './commands'));
+client.categories = readdirSync(join(__dirname, "./commands"));
 client.commands = new Collection();
 client.aliases = new Collection();
 client.utils = new Util(this);
 client.owner = owner;
 client.db = db;
+client.firestore = require("./Structures/FirestoreDB");
 
-["command"].forEach((handler) => {
-    require(`./handlers/${handler}.js`)(client);
+require(`./handlers/command.js`)(client);
+
+client.on("ready", () => {
+    console.log(`Logged in as ${client.user.username} (${client.user.id})`);
 });
 
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.username} (${client.user.id})`)
-})
-
-client.on('error', console.error) // pog error handling
+client.on("error", console.error); // pog error handling
 
 client.on("message", async (message) => {
     let prefix;
-    let fetchPrefix = client.db.get(`prefix_${message.guild.id}`);
-    if(fetchPrefix) prefix = fetchPrefix;
+    let fetchPrefix = await client.firestore.get(message.guild.id, "prefixes");
+    if (fetchPrefix) prefix = fetchPrefix;
     else {
-        prefix = "sg$"
-        client.db.set(`prefix_${message.guild.id}`, "sg$")
+        prefix = "sg$";
+        client.firestore.set("prefixes", "guild-prefix", msg.guild.id, 'sg$')
     }
 
     if (message.author.bot) return;
@@ -52,4 +52,6 @@ client.on("message", async (message) => {
     if (command) command.run(client, message, args);
 });
 
-client.login(process.env.TOKEN.toString())
+keepAlive();
+
+client.login("NzM0NDc2NjI5OTU0MjY1MTA4.XxSQqg.uAtIi1YwxxXYF8HHX3KLBqXJMXA");
